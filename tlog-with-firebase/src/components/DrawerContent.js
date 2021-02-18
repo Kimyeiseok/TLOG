@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { View, StyleSheet, Image, ImageBackground } from 'react-native';
 import { DrawerItem, DrawerContentScrollView } from '@react-navigation/drawer';
 import {
@@ -11,10 +11,36 @@ import {
   TouchableRipple,
   Switch,
 } from 'react-native-paper';
-
+import { authService, storeService } from '../../fbase';
 import { AntDesign } from '@expo/vector-icons'; 
 
+
 export const DrawerContent = ({ navigation }) => {
+
+ const [photoURL, setPhotoURL] = useState('');
+ const [mail, setMail] = useState('');
+ const [name, setName] = useState('');
+
+ useEffect(() => {
+      let docRef = storeService.collection("users").doc("vsknJ9ioYSQERRuEUy4FB3bbccP2");
+      docRef.get().then(function(doc) {
+          if (doc.exists) {
+              console.log("Document data:", doc.data());
+              setPhotoURL(doc.data().image)
+              setMail(doc.data().mail)
+              setName(doc.data().name)
+          } else {
+              // doc.data() will be undefined in this case
+              console.log("No such document!");
+          }
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
+      }); 
+    }, []);
+
+
+  
+
   return (
     <DrawerContentScrollView
       contentContainerStyle={{ paddingTop: 0, marginTop: 0 }}>
@@ -22,15 +48,12 @@ export const DrawerContent = ({ navigation }) => {
             <View style={styles.userInfoSection}>
                   <View style={{ flexDirection: 'row', marginTop: 50, marginBottom:15 }}>
                           <Avatar.Image
-                            source={{
-                              uri:
-                                'https://res.cloudinary.com/ruksa/image/upload/v1587470607/profile/pic012_kdiyqt.jpg',
-                            }}
+                            source={{uri: photoURL,}}
                             size={50}
                           />
                           <View style={{ marginLeft: 15, flexDirection: 'column' }}>
-                            <Text style={styles.title}>Rukmoni</Text>
-                            <Caption style={styles.caption}>xxxx@naver.com</Caption>
+                            <Text style={styles.title}>{name}</Text>
+                            <Caption style={styles.caption}>{mail}</Caption>
                           </View>
                   </View>
             </View>
@@ -74,11 +97,6 @@ const styles = StyleSheet.create({
   drawerContent: {
     flex: 1,
   },
-  image: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-  },
   userInfoSection: {
     backgroundColor: '#150F28',
     paddingLeft: 20,
@@ -92,29 +110,8 @@ const styles = StyleSheet.create({
   caption: {
     color: '#fff',
     fontSize: 12,
-
-  },
-  row: {
-    marginBottom: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  section: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 15,
-  },
-  paragraph: {
-    fontWeight: 'bold',
-    marginRight: 3,
   },
   drawerSection: {
     marginTop: 15,
-  },
-  preference: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
   },
 });

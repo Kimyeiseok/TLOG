@@ -9,16 +9,32 @@ const Main = () => {
   const [init, setInit] = useState(false);
   const [isSignedin, setIsSignedin] = useState(false);
 
-  useEffect(() => {
-      authService.onAuthStateChanged((user) => {
+  
+  const validateUserSignedin = async ()=>{
+        authService.onAuthStateChanged((user) => {
         if (user) {
           setIsSignedin(true);
-          console.log('user is : ', user)
+          console.log('(App.js)user is : ', user)
         } else {
           setIsSignedin(false);
         }
         setInit(true);
       });
+
+  }
+
+
+  useEffect(() => {
+     validateUserSignedin();
+      // authService.onAuthStateChanged((user) => {
+      //   if (user) {
+      //     setIsSignedin(true);
+      //     console.log('(App.js)user is : ', user)
+      //   } else {
+      //     setIsSignedin(false);
+      //   }
+      //   setInit(true);
+      // });
     }, []);
 
   return (

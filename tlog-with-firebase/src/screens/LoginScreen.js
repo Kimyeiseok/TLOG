@@ -29,7 +29,7 @@ const LoginScreen = ({ navigation }) => {
 
   const showFbmessageOnToast = () =>{
       setFbmessage('이메일 또는 패스워드가 틀립니다');
-     setTimeout(
+      setTimeout(
         () => { setFbmessage('');
               setIsAuthWaiting(prev=>(!prev));
               },2300)

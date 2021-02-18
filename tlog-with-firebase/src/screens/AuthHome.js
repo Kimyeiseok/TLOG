@@ -13,7 +13,7 @@ const AuthHome = ({ navigation }) => {
   return(
  <Background>
     <Logo />
-    <Header>TLOG</Header>
+    <Header>TLOG!</Header>
 
     <Paragraph>
       The easiest way to start with your taekwondo match.
