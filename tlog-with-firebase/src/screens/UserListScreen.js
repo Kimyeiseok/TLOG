@@ -7,21 +7,21 @@ import Button from '../components/Button';
 import BackButton from '../components/BackButton';
 import {authService} from '../../fbase'
 import {  Snackbar } from 'react-native-paper';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
+const UserList = ({ navigation }) => {
 
-
-const Dashboard = ({ navigation }) => {
   const onLogOutClick = async () => {
     await authService.signOut();
     navigation.navigate('HomeScreen')
   };
 
-   return(
 
+  return(
     <Background>
      <BackButton goBack={() => navigation.navigate('RoomListScreen')} />
-    <Header>Let’s start</Header>
+    <Logo />
+    <Header>UserList</Header>
     <Paragraph>
       Your amazing app starts here. Open you favourite code editor and start
       editing this project.
@@ -29,12 +29,11 @@ const Dashboard = ({ navigation }) => {
     <Button mode="outlined" onPress={onLogOutClick}>
       Logout
     </Button>
-    </Background>
-
+  </Background>
   )
   
 };
 
 
 
-export default memo(Dashboard);
+export default memo(UserList);
