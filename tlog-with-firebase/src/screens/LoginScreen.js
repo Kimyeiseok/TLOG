@@ -40,7 +40,7 @@ const LoginScreen = ({ navigation }) => {
     setIsAuthWaiting(prev=>(!prev));
     try {
       await authService.signInWithEmailAndPassword(email.value, password.value);
-      navigation.navigate('Dashboard');
+      navigation.navigate('DrawerNavigation');
     } catch (e) {
       console.log(e.message);
       showFbmessageOnToast();
@@ -62,7 +62,7 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <Background>   
-       <Toast isToastOn={fbmessage ? true : false} message={fbmessage} />
+      <Toast isToastOn={fbmessage ? true : false} message={fbmessage} />
       <TextInput
         label="Email"
         returnKeyType="next"
@@ -88,7 +88,7 @@ const LoginScreen = ({ navigation }) => {
 
       <View style={styles.forgotPassword}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+          onPress={() => navigation.navigate('ForgotPassword')}>
           <Text style={styles.label}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
@@ -104,7 +104,7 @@ const LoginScreen = ({ navigation }) => {
 
       <View style={styles.row}>
         <Text style={styles.label}>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>
